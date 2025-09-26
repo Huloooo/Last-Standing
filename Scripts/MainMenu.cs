@@ -2,31 +2,36 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject mainMenuUI; // assign Canvas in Inspector
+    public GameObject mainMenuUI; // Canvas
+    public GameObject player;     // Player object
+    private AudioSource menuMusic;
 
-    public void PlayGame()
+    void Start()
     {
-        Debug.Log("Play button clicked");
+        menuMusic = GetComponent<AudioSource>();
+    }
 
-        // Disable the whole UI
-        if (mainMenuUI != null)
-            mainMenuUI.SetActive(false);
+    public void StartGame()
+    {
+        // Hide menu
+        mainMenuUI.SetActive(false);
 
-        // Enable Player movement
-        GameObject player = GameObject.FindWithTag("Player");
+        // Enable Player
         if (player != null)
         {
-            PlayerMovementScript movement = player.GetComponent<PlayerMovementScript>();
-            if (movement != null)
-            {
-                movement.enabled = true;
-            }
+            player.SetActive(true);
+        }
+
+        // Stop menu music
+        if (menuMusic != null)
+        {
+            menuMusic.Stop();
         }
     }
 
     public void QuitGame()
     {
-        Debug.Log("Quit button clicked");
+        Debug.Log("Quit Game!");
         Application.Quit();
     }
 }
